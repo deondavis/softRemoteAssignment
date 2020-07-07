@@ -43,10 +43,12 @@ void server_print(int sockfd)
 } 
 
 // Driver function 
-int main() 
+int main(int argc, char* argv[]) 
 { 
 	int sockfd, connfd, len; 
 	struct sockaddr_in servaddr, cli; 
+	uint16_t port_number;
+	port_number = (argc > 1) ? atoi(argv[1]):PORT;
 
 	// socket create and verification 
 	sockfd = socket(AF_INET, SOCK_STREAM, 0); 
@@ -62,7 +64,7 @@ int main()
 	// assign IP, PORT 
 	servaddr.sin_family = AF_INET; 
 	servaddr.sin_addr.s_addr = htonl(INADDR_ANY); 
-	servaddr.sin_port = htons(PORT); 
+	servaddr.sin_port = htons(port_number); 
 
 	// Binding newly created socket to given IP and verification 
 	if ((bind(sockfd, (SA*)&servaddr, sizeof(servaddr))) != 0) { 
